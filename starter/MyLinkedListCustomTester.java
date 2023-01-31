@@ -162,7 +162,13 @@ public class MyLinkedListCustomTester {
 	 */
 	@Test
 	public void testCustomRemoveFromMiddle() {
-		// TODO: add your test here
+		filledStringList.remove(1);
+		assertEquals("Size should be 2",
+			2, filledStringList.size );
+		assertEquals("Node 1 data should be Abby",
+			"Abby", filledStringList.head.next.next.data );
+		assertEquals("Node 0 data should be John",
+			"John", filledStringList.tail.prev.prev.data );
 	}
 
 	/**
