@@ -20,7 +20,9 @@ import org.junit.*;
 
 public class MyLinkedListCustomTester {
 
-	// Optional: add test variables here
+	private MyLinkedList<Integer> emptyIntList;
+	private MyLinkedList<String> filledStringList;
+	private String strData[] = { "John" , "Hendrix" , "Abby" };
 
 	/**
 	 * This sets up the test fixture. JUnit invokes this method before
@@ -29,7 +31,34 @@ public class MyLinkedListCustomTester {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		// Optional: add setup here
+		emptyIntList = new MyLinkedList<>();
+		filledStringList = new MyLinkedList<>();
+		filledStringList.add(strData[0]);
+		filledStringList.add(strData[1]);
+		filledStringList.add(strData[2]);
+	}
+
+	@Test
+	public void testConstruction() {
+		assertEquals("Dummy head should be null for emptyIntList",
+			null, emptyIntList.head.getElement() );
+		assertEquals("Dummy tail should be null for emptyIntList",
+			null, emptyIntList.tail.getElement() );
+		assertEquals("Size should be 0",
+			0, emptyIntList.size() );
+
+		assertEquals("Dummy head should be null for filledStringList",
+			null, filledStringList.head.getElement() );
+		assertEquals("Dummy tail should be null for filledStringList",
+			null, filledStringList.tail.getElement() );
+		assertEquals("Size should be 3",
+			3, filledStringList.size() );
+		assertEquals("Node 0 should be John",
+			strData[0], filledStringList.get(0) );
+		assertEquals("Node 1 should be Hendrix",
+			strData[1], filledStringList.get(1) );
+		assertEquals("Node 0 should be Abby",
+			strData[2], filledStringList.get(2) );
 	}
 
 	/**
@@ -37,7 +66,24 @@ public class MyLinkedListCustomTester {
 	 */
 	@Test
 	public void testCustomAdd() {
-		// TODO: add your test here
+		emptyIntList.add(4);
+		MyLinkedList<Integer>.Node added = emptyIntList.getNth(0);
+		assertEquals("added data should be 4" , (Integer) 4, added.data);
+		assertEquals("Node 0 data should be 4",
+			(Integer) 4, emptyIntList.head.next.data );
+		assertEquals("Size should be 1",
+			1, emptyIntList.size );
+		assertEquals("Node 0 prev should be head",
+			emptyIntList.head, added.prev );
+		assertEquals("Node 0 next should be tail",
+			emptyIntList.tail, added.next );
+		assertEquals("Head next should be node 0",
+			emptyIntList.head.next , added );
+		assertEquals("Tail prev should be node 0",
+			emptyIntList.head.next, added );
+		assertEquals("Head next and tail prev should point to same thing",
+			emptyIntList.head.next , emptyIntList.tail.prev );
+
 	}
 
 	/**
@@ -46,7 +92,21 @@ public class MyLinkedListCustomTester {
 	 */
 	@Test
 	public void testCustomAddIdxToStart() {
-		// TODO: add your test here
+		filledStringList.add(0 , "new" );
+		MyLinkedList<String>.Node added = filledStringList.getNth(0);
+		assertEquals("added data should be new" , "new", added.data);
+		assertEquals("Node 0 should be new",
+			"new", filledStringList.head.next.data );
+		assertEquals("Size should be 4",
+			4, filledStringList.size );
+		assertEquals("Node 0 prev should be head",
+			filledStringList.head, added.prev );
+		assertEquals("Node 0 next should be node 1",
+			filledStringList.head.next.next, added.next );
+		assertEquals("Head next should be node 0",
+			filledStringList.head.next , added );
+		assertEquals("Node 1 prev should be node 0",
+			filledStringList.getNth(1).prev, added );
 	}
 
 	/**
@@ -55,7 +115,21 @@ public class MyLinkedListCustomTester {
 	 */
 	@Test
 	public void testCustomAddIdxToMiddle() {
-		// TODO: add your test here
+		filledStringList.add(2 , "new" );
+		MyLinkedList<String>.Node added = filledStringList.getNth(2);
+		assertEquals("added data should be new" , "new", added.data);
+		assertEquals("Node 2 should be new",
+			"new", filledStringList.head.next.next.next.data );
+		assertEquals("Size should be 4",
+			4, filledStringList.size );
+		assertEquals("Node 2 prev should be node 1",
+			filledStringList.head.next.next, added.prev );
+		assertEquals("Node 2 next should be node 3",
+			filledStringList.tail.prev, added.next );
+		assertEquals("node 1 next should be added",
+			filledStringList.head.next.next.next , added );
+		assertEquals("Node 3 prev should be added",
+			filledStringList.tail.prev.prev, added );
 	}
 
 	/**
