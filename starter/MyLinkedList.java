@@ -140,7 +140,10 @@ public class MyLinkedList<E> extends AbstractList<E> {
             size++;
             return;
         }
-        Node next = getNth(index);
+        Node next;
+        if ( index == size ) {
+            next = tail;
+        } else next = getNth(index);
         Node prev = next.getPrev();
         newNode.setPrev(prev);
         newNode.setNext(next);
@@ -172,7 +175,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
      * @return the data that was previously held by the node at index 
      */
     public E set(int index, E data) {
-        if ( index < 0 || index > size ) {
+        if ( index < 0 || index >= size ) {
             throw new IndexOutOfBoundsException();
         }
         if ( data == null ) {
@@ -191,7 +194,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
      * @return the data that was held in the node at index
      */
     public E remove(int index) {
-        if ( index < 0 || index > size ) {
+        if ( index < 0 || index >= size ) {
             throw new IndexOutOfBoundsException();
         }
         Node remove = getNth(index);
@@ -227,7 +230,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
      * @return the node at index
      */
     protected Node getNth(int index) {
-        if ( index < 0 || index > size ) {
+        if ( index < 0 || index >= size ) {
             throw new IndexOutOfBoundsException();
         }
         int cnt = -1;

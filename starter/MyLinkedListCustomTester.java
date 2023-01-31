@@ -137,8 +137,9 @@ public class MyLinkedListCustomTester {
 	 */
 	@Test
 	public void testCustomRemoveFromEmpty() {
-		// TODO: add your test here
-	}
+		assertThrows(IndexOutOfBoundsException.class, () -> {
+            emptyIntList.remove(0);
+        });	}
 
 	/**
 	 * Aims to test the remove(int index) method.
@@ -155,6 +156,7 @@ public class MyLinkedListCustomTester {
 	 */
 	@Test
 	public void testCustomSetIdxOutOfBounds() {
-		// TODO: add your test here
-	}
+		assertThrows(IndexOutOfBoundsException.class, () -> {
+            filledStringList.set(8, "error");
+        });	}
 }
