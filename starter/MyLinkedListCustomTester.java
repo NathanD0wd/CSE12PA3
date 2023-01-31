@@ -84,6 +84,21 @@ public class MyLinkedListCustomTester {
 		assertEquals("Head next and tail prev should point to same thing",
 			emptyIntList.head.next , emptyIntList.tail.prev );
 
+		filledStringList.add("new");
+		MyLinkedList<String>.Node added1 = filledStringList.getNth(3);
+		assertEquals("added data should be new" , "new", added1.data);
+		assertEquals("Node 3 should be new",
+			"new", filledStringList.tail.prev.data );
+		assertEquals("Size should be 4",
+			4, filledStringList.size );
+		assertEquals("Node 3 prev should be node 2",
+			filledStringList.head.next.next.next, added1.prev );
+		assertEquals("Node 3 next should be tail",
+			filledStringList.tail, added1.next );
+		assertEquals("node 2 next should be added",
+			filledStringList.head.next.next.next.next , added1 );
+		assertEquals("tail prev should be added",
+			filledStringList.tail.prev, added1 );
 	}
 
 	/**
