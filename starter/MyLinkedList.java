@@ -1,5 +1,19 @@
+/**
+ * Name: Nathan Dowd
+ * PID: A17417179
+ * Date: 1/30/2023
+ * Sources: PA2 writeup, Piazza
+ * 
+ * This file contains the MyLinkedList class. 
+ * Defines our own implementation of the LinkedList class from Java.
+ */
+
 import java.util.AbstractList;
 
+/**
+ * A class that extends AbstractList<E> and implements necessary methods.
+ * Also contains a seperate class, Node, that is used within MyLinkedList.
+ */
 public class MyLinkedList<E> extends AbstractList<E> {
 
     int size;
@@ -75,48 +89,153 @@ public class MyLinkedList<E> extends AbstractList<E> {
     //  Implementation of the MyLinkedList Class
     /** Only 0-argument constructor is defined */
     public MyLinkedList() {
-        /* Add your implementation here */
-        // TODO
+        size = 0;
+        head = new Node(null);
+        tail = new Node(null);
+        head.setNext(tail);
+        tail.setPrev(head);
     }
 
+    /**
+     * Returns number of non sentinel nodes in MyLinkedList
+     * 
+     * @return number of non sentinel nodes in list
+     */
     @Override
     public int size() {
-        // need to implement the size method
-        return 0; // TODO
+        return size;
     }
 
+    /**
+     * Returns the data contained in node at index
+     * 
+     * @param index of the node we are targeting
+     * @return the data stored within the node at index
+     */
     @Override
     public E get(int index) {
-        return (E) null;  // TODO
+        return getNth(index).getElement();
     }
 
+    /**
+     * Adds a new node holding data at index
+     * 
+     * @param index we are adding the new node at
+     * @param data is the information the new node will hold
+     */
     @Override
     public void add(int index, E data) {
-        /* Add your implementation here */
-        // TODO
+        if ( index < 0 || index > size ) {
+            throw new IndexOutOfBoundsException();
+        }
+        if ( data == null ) {
+            throw new NullPointerException();
+        }
+        Node newNode = new Node(data);
+        if ( size == 0 ) {
+            head.setNext(newNode);
+            tail.setPrev(newNode);
+            newNode.setPrev(head);
+            newNode.setNext(tail);
+            size++;
+            return;
+        }
+        Node next = getNth(index);
+        Node prev = next.getPrev();
+        newNode.setPrev(prev);
+        newNode.setNext(next);
+        next.setPrev(newNode);
+        prev.setNext(newNode);
+        size++;
     }
 
+    /**
+     * Adds new node at the end of the list holding data
+     * 
+     * @param data is the info the new node will hold
+     * @return true if successful false otherwise 
+     */
     public boolean add(E data) {
-        return true; // TODO
+        if ( data == null ) {
+            throw new NullPointerException();
+        }
+        int newSize = size + 1;
+        add( size , data );
+        return ( size == newSize );
     }
 
+    /**
+     * Sets the data in the node at index to new data
+     * 
+     * @param index of the node we are replacing
+     * @param data is the new info the node will be holding
+     * @return the data that was previously held by the node at index 
+     */
     public E set(int index, E data) {
-        return (E) null; // TODO
+        if ( index < 0 || index > size ) {
+            throw new IndexOutOfBoundsException();
+        }
+        if ( data == null ) {
+            throw new NullPointerException();
+        }
+        Node change = getNth(index);
+        E oldData = change.getElement();
+        change.setElement(data);
+        return oldData;
     }
 
+    /**
+     * Removes the node at index
+     * 
+     * @param index the index of the node we are removing
+     * @return the data that was held in the node at index
+     */
     public E remove(int index) {
-        return (E) null; // TODO
+        if ( index < 0 || index > size ) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node remove = getNth(index);
+        E data = remove.getElement();
+        remove.getPrev().setNext(remove.getNext());
+        remove.getNext().setPrev(remove.getPrev());
+        size--;
+        return data;
     }
 
+    /**
+     * Clears the MyLinkedList of all nodes other than sentinel nodes
+     */
     public void clear() {
-        /* Add your implementation here */
+        head.setNext(tail);
+        tail.setPrev(head);
+        size = 0;
     }
 
+    /**
+     * Checks if the MyLinkedList is empty
+     * 
+     * @return true if empty, false if not
+     */
     public boolean isEmpty() {
-        return true;  // TODO
+        return ( size == 0 );
     }
 
+    /**
+     * Returns the node at specified index
+     * 
+     * @param index the index of the node we are looking for
+     * @return the node at index
+     */
     protected Node getNth(int index) {
-        return (Node) null;  // TODO
+        if ( index < 0 || index > size ) {
+            throw new IndexOutOfBoundsException();
+        }
+        int cnt = -1;
+        Node curr = head;
+        while( cnt < index ) {
+            curr = curr.getNext();
+            cnt++;
+        }
+        return curr;
     }
 }

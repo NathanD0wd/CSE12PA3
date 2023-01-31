@@ -1,3 +1,12 @@
+/**
+ * Name: Nathan Dowd
+ * PID: A17417179
+ * Date: 1/30/2023
+ * Sources: PA2 writeup, Piazza
+ * 
+ * This file contains the MyLinkedListCustomTester class. 
+ * Writes more intensive testers for MyLinkedList.
+ */
 
 /**
  * IMPORTANT: Do not change the method headers. Your tests will be run against
