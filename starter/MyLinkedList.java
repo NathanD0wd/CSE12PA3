@@ -20,6 +20,9 @@ public class MyLinkedList<E> extends AbstractList<E> {
     Node head;
     Node tail;
 
+    private static final int MIN = 0;
+    private static final int INCREMENT = 1;
+
     /**
      * A Node class that holds data and references to previous and next Nodes.
      */
@@ -70,13 +73,15 @@ public class MyLinkedList<E> extends AbstractList<E> {
         public Node getNext() {
             return this.next;
         }
+
         /** 
          * Accessor to get the prev Node in the list
          * @return the previous node  
          */
         public Node getPrev() {
             return this.prev;
-        } 
+        }
+
         /** 
          * Accessor to get the Nodes Element 
          * @return this node's data
@@ -89,7 +94,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
     //  Implementation of the MyLinkedList Class
     /** Only 0-argument constructor is defined */
     public MyLinkedList() {
-        size = 0;
+        size = MIN;
         head = new Node(null);
         tail = new Node(null);
         head.setNext(tail);
@@ -125,14 +130,14 @@ public class MyLinkedList<E> extends AbstractList<E> {
      */
     @Override
     public void add(int index, E data) {
-        if ( index < 0 || index > size ) {
+        if ( index < MIN || index > size ) {
             throw new IndexOutOfBoundsException();
         }
         if ( data == null ) {
             throw new NullPointerException();
         }
         Node newNode = new Node(data);
-        if ( size == 0 ) {
+        if ( size == MIN ) {
             head.setNext(newNode);
             tail.setPrev(newNode);
             newNode.setPrev(head);
@@ -162,7 +167,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
         if ( data == null ) {
             throw new NullPointerException();
         }
-        int newSize = size + 1;
+        int newSize = size + INCREMENT;
         add( size , data );
         return ( size == newSize );
     }
@@ -175,7 +180,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
      * @return the data that was previously held by the node at index 
      */
     public E set(int index, E data) {
-        if ( index < 0 || index >= size ) {
+        if ( index < MIN || index >= size ) {
             throw new IndexOutOfBoundsException();
         }
         if ( data == null ) {
@@ -194,7 +199,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
      * @return the data that was held in the node at index
      */
     public E remove(int index) {
-        if ( index < 0 || index >= size ) {
+        if ( index < MIN || index >= size ) {
             throw new IndexOutOfBoundsException();
         }
         Node remove = getNth(index);
@@ -211,7 +216,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
     public void clear() {
         head.setNext(tail);
         tail.setPrev(head);
-        size = 0;
+        size = MIN;
     }
 
     /**
@@ -220,7 +225,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
      * @return true if empty, false if not
      */
     public boolean isEmpty() {
-        return ( size == 0 );
+        return ( size == MIN );
     }
 
     /**
@@ -230,10 +235,10 @@ public class MyLinkedList<E> extends AbstractList<E> {
      * @return the node at index
      */
     protected Node getNth(int index) {
-        if ( index < 0 || index >= size ) {
+        if ( index < MIN || index >= size ) {
             throw new IndexOutOfBoundsException();
         }
-        int cnt = -1;
+        int cnt = -INCREMENT;
         Node curr = head;
         while( cnt < index ) {
             curr = curr.getNext();
