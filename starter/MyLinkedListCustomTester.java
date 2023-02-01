@@ -68,6 +68,7 @@ public class MyLinkedListCustomTester {
 	public void testCustomAdd() {
 		emptyIntList.add(4);
 		MyLinkedList<Integer>.Node added = emptyIntList.getNth(0);
+		assertEquals("added should be node 0", emptyIntList.head.next , added);
 		assertEquals("added data should be 4" , (Integer) 4, added.data);
 		assertEquals("Node 0 data should be 4",
 			(Integer) 4, emptyIntList.head.next.data );
@@ -78,27 +79,28 @@ public class MyLinkedListCustomTester {
 		assertEquals("Node 0 next should be tail",
 			emptyIntList.tail, added.next );
 		assertEquals("Head next should be node 0",
-			emptyIntList.head.next , added );
+			added , emptyIntList.head.next );
 		assertEquals("Tail prev should be node 0",
-			emptyIntList.head.next, added );
+			added , emptyIntList.head.next );
 		assertEquals("Head next and tail prev should point to same thing",
 			emptyIntList.head.next , emptyIntList.tail.prev );
 
 		filledStringList.add("new");
 		MyLinkedList<String>.Node added1 = filledStringList.getNth(3);
+		assertEquals("added1 should be node 3", filledStringList.tail.prev , added1 );
 		assertEquals("added data should be new" , "new", added1.data);
 		assertEquals("Node 3 should be new",
 			"new", filledStringList.tail.prev.data );
 		assertEquals("Size should be 4",
 			4, filledStringList.size );
-		assertEquals("Node 3 prev should be node 2",
+		assertEquals("added1 prev should be node 2",
 			filledStringList.head.next.next.next, added1.prev );
-		assertEquals("Node 3 next should be tail",
+		assertEquals("added1 next should be tail",
 			filledStringList.tail, added1.next );
-		assertEquals("node 2 next should be added",
-			filledStringList.head.next.next.next.next , added1 );
-		assertEquals("tail prev should be added",
-			filledStringList.tail.prev, added1 );
+		assertEquals("node 2 next should be added1",
+			added1 , filledStringList.head.next.next.next.next );
+		assertEquals("tail prev should be added1",
+			added1 , filledStringList.tail.prev );
 	}
 
 	/**
